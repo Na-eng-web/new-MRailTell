@@ -2,11 +2,13 @@ import { Close, MenuOutlined, Report, Reviews, Settings } from '@mui/icons-mater
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import './App.css';
-import { logo, train } from './assets'; // Import logo
+import { logo } from './assets'; // Import logo
+import HomePage from './pages/HomePage';
+import { Outlet, Route, Router, Routes } from 'react-router-dom';
+import Atlas from './pages/Atlas';
 
 const navButtons = [
-  { label: "Atlas", hasDropdown: false, },
+  { label: "Atlas", hasDropdown: false, onClick: () => window.open("https://indianrailways.gov.in/index/index.html", "_blank") },
   { label: "Explore", hasDropdown: true, dropdownItems: ["Locomotives", "Train Cars", "Rail Signals", "Luxury Rides", "Rail Zones", "New Routes", "Maps", "IR History"] },
   { label: "Services", hasDropdown: true, dropdownItems: ["Train Routes", "Find Train", "Live Status", "PNR Check", "Tickets"] },
   { label: "Train Hub", hasDropdown: true, dropdownItems: ["Discuss", "View", "News", "Quiz", "Trip Experience"] },
@@ -21,41 +23,30 @@ const hamMenus = [
   { title: "Report Issue", icon: Report },
 ];
 
-function App() {
+
+const App = () => {
   const [activeButton, setActiveButton] = useState("Home");
   const [ham, setHam] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null); // Track open dropdown
-
-  return (
-    <Box
-      sx={{
-        backgroundImage: `url(${train})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        border: "2px solid black",
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        overflow: "hidden",
-      }}
-    >
-      {/* Navbar */}
+  return <>
+    <Box>
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          width: "98%",
           padding: "10px 20px",
           background: "rgba(0, 0, 0, 0.5)",
-          position: "relative",
+          position: "fixed",
+          zIndex: 1000000
         }}
       >
         <Box display={"flex"} gap={4}>
           <Box component="img" src={logo} alt="Logo" sx={{ height: 40, width: 40 }} />
           {/* Navigation Buttons */}
           <Box sx={{ display: "flex", gap: 2 }}>
-            {navButtons.map(({ label, hasDropdown, dropdownItems }) => (
+            {navButtons.map(({ label, hasDropdown, dropdownItems, onClick }) => (
               <Box
                 key={label}
                 sx={{ position: "relative" }}
@@ -65,7 +56,7 @@ function App() {
                 <Button
                   color="warning"
                   variant={activeButton === label ? "contained" : "text"}
-                  onClick={() => !hasDropdown && setActiveButton(label)}
+                  onClick={() => onClick ? onClick() : !hasDropdown && setActiveButton(label)}
                 >
                   <Typography sx={{ fontSize: "18px", fontWeight: 600, color: "white" }}>
                     {label}
@@ -125,7 +116,7 @@ function App() {
           animate={{ x: 0 }}
           transition={{ type: "tween", duration: 0.5 }}
           style={{
-            position: "absolute",
+            position: "fixed",
             top: 0,
             right: 0,
             width: "12rem",
@@ -137,6 +128,7 @@ function App() {
             flexDirection: "column",
             gap: "10px",
             boxShadow: "-4px 0px 8px rgba(0, 0, 0, 0.2)",
+            zIndex: 1000001,
           }}
         >
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -154,21 +146,10 @@ function App() {
           ))}
         </motion.div>
       )}
-
-      {/* Welcome Message */}
-      <Box sx={{ position: "absolute", bottom: 60, left: 50, width: "25rem" }}>
-        <Typography sx={{ fontSize: "36px", fontWeight: 600, color: "white" }}>
-          Welcome to the world's largest railfan community!
-        </Typography>
-        <Button
-          sx={{ borderRadius: "50px", bgcolor: "#b3d7d9", color: "#153134" }}
-          variant="contained"
-        >
-          Try for free
-        </Button>
-      </Box>
     </Box>
-  );
+    <HomePage />
+    <Atlas />
+  </>
 }
 
 export default App;

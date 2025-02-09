@@ -16,8 +16,11 @@
     "@mui/material": "^6.4.3",
     "@mui/styled-engine-sc": "^6.4.3",
     "framer-motion": "^12.4.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "leaflet": "^1.9.4",
+    "react": "^19.0.0-rc.1",
+    "react-dom": "^19.0.0-rc.1",
+    "react-leaflet": "^5.0.0-rc.2",
+    "react-router-dom": "^6.29.0",
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
