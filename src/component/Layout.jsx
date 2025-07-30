@@ -5,11 +5,14 @@ import { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { logo } from '../assets';
 
+// Navigation menu items configuration with dropdown structure
 const hamMenus = [{ title: "Settings", icon: Settings }, { title: "Rate Us", icon: Reviews }, { title: "Report Issue", icon: Report }];
 
 export const Layout = () => {
+  // State management for hamburger menu and dropdown visibility
   const [ham, setHam] = useState(false), [openDropdown, setOpenDropdown] = useState(null), navigate = useNavigate();
 
+  // Navigation configuration with dropdown items for different sections
   const navButtons = [
     { label: "Atlas", hasDropdown: false, onClick: () => navigate("/atlas") },
     { label: "Explore", hasDropdown: true, dropdownItems: ["Locomotives", "Train Cars", "Rail Signals", "Luxury Rides", "Rail Zones", "New Routes", "Maps", "IR History"] },
@@ -21,17 +24,29 @@ export const Layout = () => {
 
   return <>
     <Box>
+      {/* Fixed navigation bar with semi-transparent background */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "98%", padding: "10px 20px", background: "rgba(0, 0, 0, 0.5)", position: "fixed", zIndex: 1000000 }}>
         <Box display={"flex"} gap={4}>
+          {/* Logo with navigation to home */}
           <Box component="img" src={logo} alt="Logo" sx={{ height: 40, width: 40, cursor: "pointer" }} onClick={() => navigate("/")} />
+          
+          {/* Main navigation menu */}
           <Box sx={{ display: "flex", gap: 2 }}>
             {navButtons.map(({ label, hasDropdown, dropdownItems, onClick }) => (
-              <Box key={label} sx={{ position: "relative" }} onMouseEnter={() => hasDropdown && setOpenDropdown(label)} onMouseLeave={() => hasDropdown && setOpenDropdown(null)}>
+              <Box key={label} sx={{ position: "relative" }} 
+                   onMouseEnter={() => hasDropdown && setOpenDropdown(label)} 
+                   onMouseLeave={() => hasDropdown && setOpenDropdown(null)}>
                 <Button onClick={onClick}>
                   <Typography sx={{ fontSize: "18px", fontWeight: 600, color: "white" }}>{label}</Typography>
                 </Button>
+                
+                {/* Dropdown menu with smooth animation */}
                 {hasDropdown && openDropdown === label && (
-                  <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10 }} 
+                    animate={{ opacity: 1, y: 0 }} 
+                    exit={{ opacity: 0, y: -10 }} 
+                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
                     style={{ position: "absolute", top: "120%", left: 0, minWidth: "120px", background: "rgba(0, 0, 0, 0.8)", borderRadius: "5px", boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", padding: "10px 0", zIndex: 10 }}>
                     {dropdownItems.map((item) => (
                       <Typography key={item} sx={{ padding: "8px 16px", color: "white", fontSize: "14px", cursor: "pointer", "&:hover": { background: "rgba(255, 255, 255, 0.2)" }, whiteSpace: "nowrap" }}>{item}</Typography>
@@ -42,10 +57,17 @@ export const Layout = () => {
             ))}
           </Box>
         </Box>
+        
+        {/* Hamburger menu toggle for mobile */}
         <IconButton onClick={() => setHam(!ham)} sx={{ color: "white" }}><MenuOutlined /></IconButton>
       </Box>
+      
+      {/* Mobile hamburger menu with slide-in animation */}
       {ham && (
-        <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} transition={{ type: "tween", duration: 0.5 }}
+        <motion.div 
+          initial={{ x: "100%" }} 
+          animate={{ x: 0 }} 
+          transition={{ type: "tween", duration: 0.5 }}
           style={{ position: "fixed", top: 0, right: 0, width: "12rem", height: "100vh", background: "rgba(0, 0, 0, 0.8)", backdropFilter: "blur(5px)", padding: "20px", display: "flex", flexDirection: "column", gap: "10px", boxShadow: "-4px 0px 8px rgba(0, 0, 0, 0.2)", zIndex: 1000001 }}>
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
             <IconButton onClick={() => setHam(false)} sx={{ color: "white" }}><Close /></IconButton>
@@ -59,6 +81,7 @@ export const Layout = () => {
         </motion.div>
       )}
     </Box>
+    {/* Render child routes */}
     <Outlet />
   </>;
 };
