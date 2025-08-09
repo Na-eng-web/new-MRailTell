@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: naengweb/rail-tail:latest
     ports:
       - "3000:3000"
     command: serve -s dist -l 3000
