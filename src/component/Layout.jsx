@@ -12,18 +12,17 @@ export const Layout = () => {
 
   const navButtons = [
     { label: "Atlas", hasDropdown: false, onClick: () => navigate("/atlas") },
-    { label: "Explore", hasDropdown: true, dropdownItems: ["Locomotives", "Train Cars", "Rail Signals", "Luxury Rides", "Rail Zones", "New Routes", "Maps", "IR History"] },
-    { label: "Services", hasDropdown: true, dropdownItems: ["Train Routes", "Find Train", "Live Status", "PNR Check", "Tickets"] },
-    { label: "Train Hub", hasDropdown: true, dropdownItems: ["Discuss", "View", "News", "Quiz", "Trip Experience"] },
-    { label: "Fav creators", hasDropdown: false },
-    { label: "Stocks" }
+    { label: "Train Hub", hasDropdown: true, dropdownItems: ["Locomotives", "Rolling Stock", "Signalling", "Luxury Train", "Railway Zones", "New Railway Lines", "Maps", "History of IR"] },
+    { label: "Creators", hasDropdown: false, },
+    { label: "Stocks", hasDropdown: false, },
+    { label: "Train Radar", hasDropdown: false, },
   ];
 
   return <>
     <Box>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "98%", padding: "10px 20px", background: "rgba(0, 0, 0, 0.5)", position: "fixed", zIndex: 1000000 }}>
         <Box display={"flex"} gap={4}>
-          <Box component="img" src={logo} alt="Logo" sx={{ height: 40, width: 40, cursor: "pointer" }} onClick={() => navigate("/")} />
+          <Box component="img" src={logo} alt="Logo" sx={{ height: 40, width: 60, cursor: "pointer", scale: "1.2" }} onClick={() => navigate("/")} />
           <Box sx={{ display: "flex", gap: 2 }}>
             {navButtons.map(({ label, hasDropdown, dropdownItems, onClick }) => (
               <Box key={label} sx={{ position: "relative" }} onMouseEnter={() => hasDropdown && setOpenDropdown(label)} onMouseLeave={() => hasDropdown && setOpenDropdown(null)}>

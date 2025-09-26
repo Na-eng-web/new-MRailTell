@@ -1,55 +1,61 @@
-import { Box, Stack, Typography } from "@mui/material";
-import { logo, second } from "../assets";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { Box, Grid, Typography } from "@mui/material";
+import { motion } from 'framer-motion';
 
-const infoData = [{
-  image: logo, heading: "Platform For Railway creators",
-  subheading: "Promote Yourself as a railway creator and Display You profile in Creators Option"
-}, {
-  image: logo, heading: "Upcoming Railway Lines",
-  subheading: "See the info of under construction Railway Lines Like progess, How much work complete Deadline etc"
-}, {
-  image: logo, heading: "Explore Railway",
-  subheading: "Explore Railway by using Atlas Option and see the Railway Lines on Map"
-}];
-
-const InfoElement = ({ image, heading, subheading }) => (
-  <Box sx={{ display: "flex", flexDirection: "column", maxWidth: 300 }}>
-    <Box component="img" src={image} alt="Logo" sx={{ height: 40, width: 40 }} />
-    <Typography sx={{ fontSize: "24px", color: "white", fontWeight: 600 }}>{heading}</Typography>
-    <Typography sx={{ fontSize: "18px", color: "white" }}>{subheading}</Typography>
-  </Box>
-);
-
+const data = [
+  { title: "Connect With Other Railfans", description: "Connect or Chat With another RailfanBy using Discuss option" },
+  { title: "Platform For Railway creators", description: "Promote Yourself as a railway creator and Display Your profile in Creators Option" },
+  { title: "Explore Indian Railway", description: "You can access all Indian Railway information on RailTell by using Explore Option" },
+];
 const SecondSection = () => {
-  const MotionBox = motion(Box), MotionTypography = motion(Typography);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-
   return (
-    <MotionBox ref={ref} initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : { opacity: 0 }} transition={{ duration: 1 }} sx={{
-      backgroundImage: `url(${second})`, height: '100vh', backgroundSize: "cover"
-    }}>
-      <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100vh" }}>
-        <Box sx={{ display: "flex", justifyContent: "flex-end", pr: 20, pt: 5 }}>
-          <MotionTypography initial={{ x: 100, opacity: 0 }} animate={isInView ? { x: 0, opacity: 1 } : { x: 100, opacity: 0 }} transition={{ duration: 0.8, delay: 0.5 }}
-            sx={{ fontSize: "60px", color: "white" }}>What is RailTell ?</MotionTypography>
-        </Box>
-        <Box sx={{ display: "flex", width: "100%", justifyContent: "space-around" }}>
-          {infoData.map((d, index) => (
-            <motion.div key={index} initial={{ y: 50, opacity: 0 }} animate={isInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }} transition={{ duration: 0.5, delay: index * 0.2 + 1 }}>
-              <InfoElement {...d} />
+    <Box sx={{ padding: "50px 20px" }}>
+      <Typography sx={{ fontSize: "64px", fontWeight: "bold", color: "#0D5A60" }} align="center" gutterBottom>
+        What is RailTell ?
+      </Typography>
+      <Grid container spacing={6} justifyContent="center" sx={{ marginTop: 2, marginBottom: 2 }}>
+        {data.map((item, index) => (
+          <Grid item key={index} xs={12} sm={6} md={3}>
+            <motion.div
+              whileHover={{
+                y: -10,
+                scale: 1.04,
+                boxShadow: "0 12px 36px 0 rgba(31, 38, 135, 0.30)",
+                background: '#005a99',
+              }}
+              transition={{ type: 'spring', stiffness: 80, damping: 18, duration: 0.7 }}
+              style={{
+                padding: 24,
+                background: '#0075C1',
+                borderRadius: 16,
+                boxShadow: '0 4px 20px 0 rgba(31, 38, 135, 0.18)',
+                height: '100%',
+                cursor: 'pointer',
+                display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+              }}
+            >
+              <Typography
+                variant="h6"
+                gutterBottom
+                sx={{
+                  color: '#fff',
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                  textShadow: '0 2px 8px rgba(13,90,96,0.10)',
+                  mb: 1.5,
+                  fontSize: { xs: 20, md: 24 },
+                  transition: 'color 0.3s',
+                }}
+              >
+                {item.title}
+              </Typography>
+              <Box sx={{ width: '40px', height: '3px', background: 'linear-gradient(90deg, #fff 0%, #b2ebf2 100%)', borderRadius: 2, mb: 1.5 }} />
+              <Typography variant="body2" sx={{ color: '#e0f7fa', textAlign: 'center', fontSize: 15, lineHeight: 1.6 }}>{item.description}</Typography>
             </motion.div>
-          ))}
-        </Box>
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: 20, pb: 5 }}>
-          <Typography sx={{ fontSize: "24px", color: "white", fontWeight: 700 }}>Information Of Under Construction Railway Lines</Typography>
-          <Typography sx={{ fontSize: "18px", color: "white" }}>See the info of under construction Railway Lines Like progess, How much work complete Deadline etc by using Upcoming Railway lines Options</Typography>
-        </Box>
-      </Box>
-    </MotionBox>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
-};
+}
 
 export default SecondSection;
